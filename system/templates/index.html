@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Available Templates</title>
+	<style type="text/css" media="screen">
+		body,p,ul,li,div,h1{margin:0;padding:0;font-size:14px;}
+		body{font-family: "Helvetica Neue", Helvetica, sans-serif;text-rendering:optimizeLegibility;webkit-font-smoothing: antialiased;}
+		div{margin:30px 0 40px 30px;width:350px}
+		h1{padding:7px 8px;letter-spacing:-1px;line-height:26px;font-size:24px;white-space:nowrap;}
+		li{list-style:none;border-top:1px solid #EEE;padding:1px 0;}
+		a{-webkit-transition:all 150ms ease-in-out;}
+		a,p{color:#333;text-decoration:none;padding:6px 8px;background:#FFF;-webkit-border-radius:3px;display:block;}
+		a:hover{color:#222;background:#EEE;}
+		a.recompiling,a.recompiling:hover{color:#AAA;}
+		a#recompile{margin-top:25px;font-weight:bold;color:#AAA}
+		a#recompile.recompiling{color:#CCC} /*background:#BFA;color:#160; */
+	</style>
+	<script type="text/javascript" charset="utf-8">if(!window.console){console={log:function(){}}}</script>
+	<script src="/system/media/jquery-1.4.2.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" charset="utf-8">
+		$(document).ready(function() {
+
+			var isCtrl = false;
+
+			$(document).keyup(function (e) {
+				if(e.which == 82) $("#recompile").click();
+			});
+
+			$("#recompile")
+			.ajaxStart(function(){
+				this.ajaxing = true;
+				$(this).addClass("recompiling");
+			})
+			.ajaxStop(function(){
+				this.ajaxing = false;
+				$(this).removeClass("recompiling");
+			})
+			.click(function(){
+				if( !this.ajaxing ){
+					$("ul li").find("a").each(function(){
+						var $a = $(this);
+						$a.addClass("recompiling");
+
+						$.ajax({
+							type:		"GET",
+							data:		{render: "yes"},
+							url:		$a.attr("href"),
+							success:	function(data){
+								console.log(data);
+								$a.removeClass("recompiling");
+							}
+						});
+					});
+				} else {
+					console.log("Already recompiling. Hang on a sec.");
+				}
+				return false;
+			});
+		});
+	</script>
+</head>
+<body>
+
+<div>
+<h1>Available Templates</h1>
+<ul>
+{% for template in templates %}
+	<li><a href="{{ SITE_URL }}{{ template }}">{{ template }}</a></li>
+{% else %}
+	<li><p>No templates available.</p></li>
+{% endfor %}
+</ul>
+
+{% if templates %}
+<a href="#" id="recompile">Recompile Templates</a>
+{% endif %}
+
+</div>
+
+</body>
+</html>
