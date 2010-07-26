@@ -4,13 +4,8 @@ server {
 	server_name	 example.com;
 
 	location / {
-		root   /sites/relay/html/;
-		index  index.html index.htm index.php;
-
-		if (-f $request_filename) {
-			expires	 30d;
-			break;
-		}
+		root   /path/to/site/;
+		index  index.html index.php;
 
 		if ($request_filename ~ /) {
 			rewrite ^/(.*)$ /index.php/$1 last;
