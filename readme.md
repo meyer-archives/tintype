@@ -7,6 +7,7 @@ Here&rsquo;s how this all went down. I used Django for [a little project](http:/
 
 ## Awesome! How do I use it?
 PHP5-ish is required (obviously).
+
 1. Dump the contents of this repository in a web-accessible directory.
 2. Copy the contents of <code>/sites/example/</code> into a new directory in <code>/sites/</code>.
 3. Add templates in the templates directory, and media the media directory. Media is accessible via the *MEDIA_URL* variable (example: <code>{{ MEDIA_URL }}style.css</code>).
