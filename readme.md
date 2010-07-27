@@ -19,7 +19,7 @@ PHP5-ish is required (obviously).
 * Click *Recompile Templates* to, well, recompile all your Django templates to flat HTML. The compiled templates will be in <code>/sites/SITE_DIR/templates-compiled/</code>. That way, you can zip and share the templates easily.
 * Set variables in <code>data.yml</code>. You can create an array an iterate through it using a Django <code>for</code> loop (<code>{% for var in array_name %}</code>).
 
-<img src="http://twitpic.com/28zn41">
+<img src="http://twitpic.com/show/full/28zn41.png">
 
 ## NGINX + mod_rewrite
 Don&rsquo;t you fret!! Put this in one of your server blocks:
