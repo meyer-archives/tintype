@@ -17,32 +17,37 @@ class Tintype {
 				)
 			),3,false
 		);
-
-		if( self::$site_dir = $this->get_site_dir($site_name) ){
-			self::$site_name = $site_name;
-			if( file_exists( self::$site_dir . "data.yml" ) ){
-				self::$data = sfYaml::load(self::$site_dir . "data.yml");
-				self::$data["SITE_URL"] = "/".$site_name."/";
-
-				if( $template_name ){
-					if( file_exists( self::$site_dir . "templates/" . $template_name ) && $template_name != "index.html" ){
-						self::$template = $template_name;
+		if( $site_name ){
+			if( self::$site_dir = $this->get_site_dir($site_name) ){
+				self::$site_name = $site_name;
+				if( file_exists( self::$site_dir . "data.yml" ) ){
+					self::$data = sfYaml::load(self::$site_dir . "data.yml");
+					if( $template_name ){
+						if( file_exists( self::$site_dir . "templates/" . $template_name ) && $template_name != "index.html" ){
+							self::$template = $template_name;
+						} else {
+							self::$template = "template_error.html";
+							self::$data = array(
+								"error_msg" => "Template &ldquo;{$template_name}&rdquo; does not exist."
+							);
+						}
 					} else {
-						self::$template = "template_error.html";
-						self::$data = array(
-							"error_msg" => "Template &ldquo;{$template_name}&rdquo; does not exist."
-						);
+						self::$data["SITE_URL"] = "/".$site_name."/";
+						self::$template = "index.html";
 					}
 				} else {
-					self::$template = "index.html";
+					self::$template = "template_error.html";
 				}
 			} else {
 				self::$template = "template_error.html";
+				self::$data = array(
+					"error_msg" => "Site <code>$site_name</code> does not exist!"
+				);
 			}
 		} else {
 			self::$template = "template_error.html";
 			self::$data = array(
-				"error_msg" => "That page doesn&rsquo;t exist, motherfuton!"
+				"error_msg" => "No site specified!"
 			);
 		}
 	}
@@ -91,6 +96,9 @@ class Tintype {
 			)
 		);
 
+		// Dirty hack.
+		require_once SYS_PATH . 'tags.php';
+		$twig->addExtension(new Twig_Extras());
 
 		$template = $twig->loadTemplate(self::$template);
 
@@ -124,7 +132,8 @@ class Tintype {
 			}
 		}
 
-		// Output the rendered template
+		// Overwrite any potentially changed variables
+		self::$data["SITE_URL"] = "/".self::$site_name."/";
 		self::$data["MEDIA_URL"] = SITE_URL . self::$site_name . "/media/";
 		$template->display(self::$data);
 
