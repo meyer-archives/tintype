@@ -1,12 +1,12 @@
 # About Tintype
 ## What it is
-**Tintype** is a simple HTML prototyping engine written in PHP.
+**Tintype** is a simple HTML prototyping engine written in PHP. It uses a PHP implementation of the Django template engine called [Twig](http://github.com/fabpot/twig).
 
 ## Brief History
 Here&rsquo;s how this all went down. I used Django for [a little project](http://ligonier.org), and instantly fell in nerd-love with the template engine. I wanted to use it on _everything_, but that just isn&rsquo;t practical. **Tintype** allows you to use the Django template engine and all its conveniences for prototyping, but once you&rsquo;re done, you can flatten the Django template file out to a normal HTML file. Neat-o!
 
 ## Awesome! How do I use it?
-0. PHP5-ish is required (obviously).
+PHP5-ish is required (obviously).
 1. Dump the contents of this repository in a web-accessible directory.
 2. Copy the contents of <code>/sites/example/</code> into a new directory in <code>/sites/</code>.
 3. Add templates in the templates directory, and media the media directory. Media is accessible via the *MEDIA_URL* variable (example: <code>{{ MEDIA_URL }}style.css</code>).
