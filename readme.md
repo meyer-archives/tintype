@@ -7,8 +7,8 @@ Here&rsquo;s how this all went down. I used Django for [a little project](http:/
 
 ## Awesome! How do I use it?
 * Dump the contents of this repository in a web-accessible directory.
-* Copy the contents of <code>/sites/example/</code> into a new directory in <code>/sites/</code> (example: <code>iphone-dev</code>).
-* Add templates in <code>/sites/SITEDIR/templates/</code>. Add media in <code>/sites/SITEDIR/media/</code>. Media is accessible via the <code>MEDIA_URL</code> variable (example: <code>{{ MEDIA_URL }}style.css</code>).
+* Copy the contents of <code>/sites/example/</code> into a new directory in <code>/sites/</code>.
+* Add templates in the templates directory, and media the media directory. Media is accessible via the *MEDIA_URL* variable (example: <code>{{ MEDIA_URL }}style.css</code>).
 * There is no step four!
 
 PHP5-ish is required (obviously).
@@ -17,9 +17,7 @@ PHP5-ish is required (obviously).
 * How I use **Tintype**: I use [VirtualHostX](http://clickontyler.com/virtualhostx/) for local development (and you should too!) and I use a virtual host called <code>prototypes</code> for all my HTML prototyping stuff.
 * If you don&rsquo;t want a file to show up in the project view, prefix the filename with an <code>_underscore</code>, and it won&rsquo;t show. This works well with template inheritance.
 * Click *Recompile Templates* to, well, recompile all your Django templates to flat HTML. The compiled templates will be in <code>/sites/SITE_DIR/templates-compiled/</code>. That way, you can zip and share the templates easily.
-* Set variables in <code>data.yml</code>. You can create an array an iterate through it using a Django <code>for</code> loop (<code>{% for var in array_name %}</code>).
-
-<img src="http://twitpic.com/show/full/28zn41.png">
+* Set variables in <code>data.yml</code>. You can create an array an iterate through it using a Django *for* loop (example: <code>{% for var in array_name %}</code>).
 
 ## NGINX + mod_rewrite
 Don&rsquo;t you fret!! Put this in one of your server blocks:
@@ -33,7 +31,6 @@ Don&rsquo;t you fret!! Put this in one of your server blocks:
 		}
 	}
 </pre>
-You can also find this _very same code_ (as well as a really generic <code>server</code> block) in <code>tintype.ngx</code> in the root of the project directory.
 
 ## Other Server Software
 Can&rsquo;t help you there. Google that bidness.
