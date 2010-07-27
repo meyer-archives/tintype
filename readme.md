@@ -1,5 +1,4 @@
 # About Tintype
-## What it is
 **Tintype** is a simple HTML prototyping engine written in PHP. It uses a PHP implementation of the Django template engine called [Twig](http://github.com/fabpot/twig).
 
 ## Brief History
@@ -10,7 +9,7 @@ PHP5-ish is required (obviously).
 
 1. Dump the contents of this repository in a web-accessible directory.
 2. Copy the contents of <code>/sites/example/</code> into a new directory in <code>/sites/</code>.
-3. Add templates in the templates directory, and media the media directory. Media is accessible via the *MEDIA_URL* variable (example: <code>{{ MEDIA_URL }}style.css</code>).
+3. Put templates (HTML, XML, JSON) in the templates directory, and media (images, CSS, JS) in the media directory. Media is accessible via the *MEDIA_URL* variable (example: <code>{{ MEDIA_URL }}style.css</code>).
 4. Visit <code>http://prototype-url/site-folder/</code>, where *site-folder* refers to the new folder you created in step 2. This page is the project index, and if you have templates in the templates directory, they&rsquo;ll be displayed there.
 5. There is no step five!
 
@@ -23,14 +22,14 @@ PHP5-ish is required (obviously).
 ## NGINX + mod_rewrite
 Don&rsquo;t you fret!! Put this in your <code>server</code> block:
 <pre>
-	location / {
-		root   /path/to/site/;
-		index  index.html index.php;
+location / {
+	root   /path/to/site/;
+	index  index.html index.php;
 
-		if ($request_filename ~ /) {
-			rewrite ^/(.*)$ /index.php/$1 last;
-		}
+	if ($request_filename ~ /) {
+		rewrite ^/(.*)$ /index.php/$1 last;
 	}
+}
 </pre>
 
 ## Other Server Software
