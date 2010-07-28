@@ -3,4 +3,4 @@
 	url = git://github.com/fabpot/Twig.git
 [submodule "system/third-party/yaml"]
 	path = system/third-party/yaml
-	url = http://github.com/fabpot/yaml.git
+	url = git://github.com/fabpot/yaml.git
