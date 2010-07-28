@@ -8,8 +8,7 @@ class Twig_Extras extends Twig_Extension{
 	public function getFilters(){
 		return array(
 			'slice' => new Twig_Filter_Function('twig_slice_filter'),
-			'first' => new Twig_Filter_Function('twig_first_filter'),
-			'debug' => new Twig_Filter_Function('twig_debug_filter')
+			'first' => new Twig_Filter_Function('twig_first_filter')
 		);
 	}
 
@@ -28,14 +27,11 @@ function twig_first_filter($array){
 	return array_shift($array);
 }
 
-function twig_debug_filter($array){
-	return "<pre>Debug output: " . print_r($array,1) . "</pre>";
-}
-
 class Lorem_TokenParser extends Twig_TokenParser{
 	public function parse(Twig_Token $token){
 		$line_number = $token->getLine();
 		$words = $this->parser->getStream()->expect(Twig_Token::NUMBER_TYPE)->getValue();
+#		if( $next = $this->parser->getStream()->test(Twig_Token::NAME_TYPE) && $next == "single" ){}
 		$this->parser->getStream()->expect(Twig_Token::BLOCK_END_TYPE);
 		return new Lorem_Node($words, $line_number);
 	}
@@ -54,11 +50,11 @@ class Lorem_Node extends Twig_Node{
 	}
 
 	public function loremify($wordcount){
-		// Min/max words per sentence
+		# Min/max words per sentence
 		$s_min = 5;
 		$s_max = 20;
 
-		// Min/max sentences per paragraph
+		# Min/max sentences per paragraph
 		$p_min = 2;
 		$p_max = 6;
 
@@ -97,7 +93,7 @@ class Lorem_Node extends Twig_Node{
 		$s_count = 0;
 		$sentences = array();
 
-		// Calculate words per sentence
+		# Calculate words per sentence
 		while( $i < $wordcount ){
 			$s = rand($s_min,$s_max);
 			if( $i + $s > $wordcount )
@@ -117,8 +113,8 @@ class Lorem_Node extends Twig_Node{
 		$p_count = 0;
 		$paragraphs = array();
 
-		// Calculate the number of sentences per paragraph
-		while($i < $s_count){ // This looks familiar.
+		# Calculate the number of sentences per paragraph
+		while($i < $s_count){ # This looks familiar.
 			$p = rand($p_min,$p_max);
 			if( $i + $p > $s_count )
 				$p = $s_count - $i;

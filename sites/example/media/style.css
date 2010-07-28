@@ -3,6 +3,6 @@ body{font-family: "Helvetica Neue", Helvetica, sans-serif;text-rendering:optimiz
 div{margin:30px 0 40px 30px;width:450px}
 h1{padding:7px 8px;letter-spacing:-1px;line-height:26px;font-size:24px;white-space:nowrap;}
 li{list-style:none;border-top:1px solid #EEE;padding:1px 0;}
-a{-webkit-transition:all 150ms ease-in-out;}
-a,p{color:#333;text-decoration:none;padding:6px 8px;background:#FFF;-webkit-border-radius:3px;display:block;}
-a:hover{color:#222;background:#EEE;}
+a{-webkit-transition:all 150ms ease-in-out;background:#EEE;border:1px solid #DDD;}
+a,p{color:#333;text-decoration:none;padding:6px 8px;-webkit-border-radius:3px;display:block;}
+a:hover{color:#222;background:#FAFAFA;}
