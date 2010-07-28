@@ -1,8 +1,14 @@
 {% extends "_base.html" %}
-{% block heading %}Sausage McMuffin!{% endblock %}
+{% block heading %}Example Page{% endblock %}
 {% block content %}
 
-<p>Site name from <code>data.yml</code>: <em>{{ site_name }}</em></p>
-{% lorem 45 2 %}
+<p>View source: <code>/sites{{ SITE_URL }}site.html</code></p>
+<p>Variable <code>site_name</code> set in <code>data.yml</code>: <em>{{ site_name }}</em></p>
+<p>100 words of <code>lorem</code> text:</p>
+{% lorem 100 %}
+
+{% for number in goodtime %}
+<p>{{ number }}</p>
+{% endfor %}
 
 {% endblock %}

@@ -13,7 +13,7 @@ class Tintype {
 						array_shift(
 							explode("?",$_SERVER["REQUEST_URI"])
 						),"/"
-					),3
+					),2
 				)
 			),3,false
 		);
@@ -82,23 +82,15 @@ class Tintype {
 	}
 
 	public function render_page(){
+		global $twig, $twigfs;
+
 		Twig_Autoloader::register();
 		$template_dirs = array(SYS_PATH . "templates");
+
 		if( self::$site_dir )
 			$template_dirs[] = self::$site_dir . "templates";
 
-		$twig = new Twig_Environment(
-			new Twig_Loader_Filesystem(
-				$template_dirs
-			),
-			array(
-				'cache' => false // self::$site_dir . "/cache/"
-			)
-		);
-
-		// Dirty hack.
-		require_once SYS_PATH . 'tags.php';
-		$twig->addExtension(new Twig_Extras());
+		$twigfs->setPaths($template_dirs);
 
 		$template = $twig->loadTemplate(self::$template);
 
@@ -106,7 +98,8 @@ class Tintype {
 		if( self::$template != "index.html" ) {
 			if( !empty( $_GET["render"] ) && $_GET["render"] == "yes" ) {
 				// Simple MEDIA_URL
-				self::$data["MEDIA_URL"] = "/media/";
+				self::$data["MEDIA_URL"] = "../media/";
+				self::$data["SITE_URL"] = "./";
 				$file_contents = $template->render(self::$data);
 
 				// Open, write, close
