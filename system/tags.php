@@ -168,7 +168,7 @@ class Lorem_Node extends Twig_Node{
 	public function compile($compiler){
 		$compiler
 			->addDebugInfo($this)
-			->write('echo "'.$this->lorem.'"' . "\n")
+			->write('echo "'.$this->lorem.'";' . "\n")
 		;
 	}
 }
