@@ -14,7 +14,8 @@ class Twig_Extras extends Twig_Extension{
 
 	public function getTokenParsers(){
 		return array(
-			new Lorem_TokenParser()
+			new Lorem_TokenParser(),
+			new URL_Regex_TokenParser()
 		);
 	}
 }
@@ -25,6 +26,38 @@ function twig_slice_filter($array, $offset, $length){
 
 function twig_first_filter($array){
 	return array_shift($array);
+}
+
+class URL_Regex_TokenParser extends Twig_TokenParser{
+	public function parse(Twig_Token $token){
+		$line_number = $token->getLine();
+		$regex = $this->parser->getStream()->expect(Twig_Token::STRING_TYPE)->getValue();
+		$return_value = $this->parser->getStream()->expect(Twig_Token::STRING_TYPE)->getValue();
+		$this->parser->getStream()->expect(Twig_Token::BLOCK_END_TYPE);
+		return new URL_Regex_Node($regex, $return_value, $line_number);
+	}
+
+	public function getTag(){
+		return 'url';
+	}
+}
+
+class URL_Regex_Node extends Twig_Node{
+	protected $url, $regex, $return_value;
+ 
+	public function __construct($regex, $return_value, $line_number){
+		parent::__construct();
+		$this->url = array_pop(explode("/",trim($_SERVER["REQUEST_URI"],"/")));
+		$this->regex = $regex;
+		$this->return_value = $return_value;
+	}
+
+	public function compile($compiler){
+		$compiler
+			->addDebugInfo($this)
+			->write('echo preg_match("/'.preg_replace("/[^-_.\w]+/","-",$this->regex).'/", "'.$this->url.'") ? "' . $this->return_value . '" : "";' . "\n")
+		;
+	}
 }
 
 class Lorem_TokenParser extends Twig_TokenParser{
@@ -135,8 +168,7 @@ class Lorem_Node extends Twig_Node{
 	public function compile($compiler){
 		$compiler
 			->addDebugInfo($this)
-			->write('echo "'.$this->lorem.'"')
-			->raw(";\n")
+			->write('echo "'.$this->lorem.'"' . "\n")
 		;
 	}
 }
