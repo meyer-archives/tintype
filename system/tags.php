@@ -55,7 +55,7 @@ class URL_Regex_Node extends Twig_Node{
 	public function compile($compiler){
 		$compiler
 			->addDebugInfo($this)
-			->write('echo preg_match("/'.preg_replace("/[^-_.\w]+/","-",$this->regex).'/", "'.$this->url.'") ? "' . $this->return_value . '" : "";' . "\n")
+			->write('echo preg_match("/'.preg_replace("/[^-_.()\\|*\w]+/","-",$this->regex).'/", "'.$this->url.'") ? "' . $this->return_value . '" : "";' . "\n")
 		;
 	}
 }
